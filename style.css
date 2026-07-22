@@ -1,0 +1,380 @@
+/* ============================================
+   TOKENS
+   ============================================ */
+:root {
+  --paper: #F7F6F2;
+  --ink: #1B2430;
+  --ink-soft: #566072;
+  --line: #DCD8CE;
+  --blue: #2F5D8A;
+  --blue-soft: #EAF0F6;
+  --green: #3F8F6F;
+  --green-soft: #E9F4EF;
+  --code-bg: #10151C;
+  --code-line: #2A3340;
+
+  --font-display: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --radius: 10px;
+  --max-width: 760px;
+}
+
+/* ============================================
+   RESET & BASE
+   ============================================ */
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--blue); text-decoration: none; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+
+h1, h2, h3, h4 { margin: 0; line-height: 1.2; }
+
+ul { margin: 0; padding: 0; list-style: none; }
+
+/* ============================================
+   SIGNATURE: BROWSER CHROME BAR
+   ============================================ */
+.chrome {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--code-bg);
+  color: #E7EAF0;
+  padding: 12px 20px 0;
+  border-bottom: 1px solid var(--code-line);
+}
+
+.chrome-row {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.dots {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  background: #4A5568;
+}
+.dots span:nth-child(1) { background: #E4634B; }
+.dots span:nth-child(2) { background: #E5B93F; }
+.dots span:nth-child(3) { background: var(--green); }
+
+.address-bar {
+  flex: 1;
+  background: #1B232F;
+  border: 1px solid var(--code-line);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #AEB8C7;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.address-bar .url { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lock { font-size: 10px; opacity: 0.8; }
+
+.status-chip {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--green-soft);
+  color: var(--green);
+  padding: 4px 9px;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+
+.chrome-nav {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  gap: 20px;
+  padding: 10px 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  overflow-x: auto;
+}
+.chrome-nav a {
+  color: #8B95A6;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
+.chrome-nav a:hover, .chrome-nav a:focus-visible { color: #E7EAF0; }
+
+/* ============================================
+   LAYOUT
+   ============================================ */
+main {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ============================================
+   HERO
+   ============================================ */
+.hero {
+  padding: 56px 0 40px;
+  border-bottom: 1px solid var(--line);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--blue);
+  margin: 0 0 14px;
+  text-transform: lowercase;
+}
+
+.hero h1 {
+  font-size: clamp(2.1rem, 5vw, 3.1rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.tagline {
+  margin: 18px 0 26px;
+  max-width: 56ch;
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+}
+
+.contact-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pill {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  background: var(--blue-soft);
+  color: var(--blue);
+  padding: 7px 12px;
+  border-radius: 20px;
+  display: inline-flex;
+  gap: 6px;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.pill span { color: var(--ink); font-weight: 500; }
+.pill:hover, .pill:focus-visible { transform: translateY(-1px); background: #DCE7F1; }
+
+/* ============================================
+   ROUTE SECTIONS (API-doc pattern)
+   ============================================ */
+.route {
+  padding: 40px 0;
+  border-bottom: 1px solid var(--line);
+  scroll-margin-top: 90px;
+}
+.route:last-of-type { border-bottom: none; }
+
+.route-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+  font-family: var(--font-mono);
+}
+
+.method {
+  background: var(--code-bg);
+  color: #86D6B5;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.03em;
+}
+
+.path {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.status {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+/* ============================================
+   ENTRIES
+   ============================================ */
+.entry { margin-bottom: 26px; }
+.entry:last-child { margin-bottom: 0; }
+
+.entry-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 4px 16px;
+  margin-bottom: 6px;
+}
+
+.entry-top h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.date {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.role {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.card {
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.card:hover { border-color: var(--blue); transform: translateY(-2px); }
+
+.entry ul {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.entry li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 0.94rem;
+  color: var(--ink);
+}
+.entry li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  color: var(--blue);
+  font-weight: 700;
+}
+
+/* ============================================
+   AWARDS / ACTIVITIES
+   ============================================ */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.col-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--blue);
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.chip-list li {
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--line);
+  font-size: 0.92rem;
+}
+.chip-list li:last-child { border-bottom: none; }
+
+.mult {
+  font-family: var(--font-mono);
+  color: var(--green);
+  font-size: 0.85em;
+  margin-left: 4px;
+}
+
+/* ============================================
+   SKILLS — JSON BLOCK
+   ============================================ */
+.json-block {
+  background: var(--code-bg);
+  color: #C9D2E0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  padding: 22px 24px;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  line-height: 1.9;
+}
+.json-block .brace { color: #8B95A6; }
+.json-row { padding-left: 20px; white-space: pre-wrap; }
+.key { color: #86D6B5; }
+.val { color: #F0C987; }
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 30px 20px 60px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+.footer a { color: var(--ink-soft); text-decoration: underline; }
+
+/* ============================================
+   SCROLL REVEAL
+   ============================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 640px) {
+  .two-col { grid-template-columns: 1fr; gap: 24px; }
+  .hero { padding: 40px 0 32px; }
+  .chrome-nav { gap: 14px; }
+  .entry-top { flex-direction: column; align-items: flex-start; }
+}
